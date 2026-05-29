@@ -1,7 +1,8 @@
-import 'package:cine_flutter_app/colors/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:cine_flutter_app/colors/app_colors.dart';
+import 'package:cine_flutter_app/fonts/app_fonts.dart';
 import 'login_screen.dart';
+
 
 
 class SplashScreen extends StatefulWidget {
@@ -44,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 children: [
                   Text(
                     "Cine",
-                    style: GoogleFonts.fraunces(
+                    style: AppFonts.fraunces(
                       color: AppColors.nougat,
                       fontSize: 40,
                       fontStyle: FontStyle.italic,
@@ -54,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   const SizedBox(width: 3),
                   Text(
                     "Stream",
-                    style: GoogleFonts.fraunces(
+                    style: AppFonts.fraunces(
                       color: AppColors.nougat,
                       fontSize: 40,
                       fontWeight: FontWeight.w500,
@@ -68,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen> {
               Text(
                 "O CINEMA QUE VOCÊ AMA",
                 textAlign: TextAlign.center,
-                style: GoogleFonts.dmMono(
+                style: AppFonts.dmMono(
                   color: AppColors.nougat,
                   fontSize: 11,
                   fontWeight: FontWeight.w200,
