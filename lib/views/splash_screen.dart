@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cine_flutter_app/colors/app_colors.dart';
-import 'package:cine_flutter_app/fonts/app_fonts.dart';
+import '../core/colors/app_colors.dart';
+import '../core/fonts/app_fonts.dart';
 import 'login_screen.dart';
-
 
 
 class SplashScreen extends StatefulWidget {
@@ -18,7 +17,9 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     Future.delayed(const Duration(seconds: 5), () {
-      if (!mounted) return;
+      if (!mounted) {
+        return;
+      }
 
       Navigator.pushReplacement(
         context,
@@ -44,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Cine",
+                    'Cine',
                     style: AppFonts.fraunces(
                       color: AppColors.nougat,
                       fontSize: 40,
@@ -54,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                   const SizedBox(width: 3),
                   Text(
-                    "Stream",
+                    'Stream',
                     style: AppFonts.fraunces(
                       color: AppColors.nougat,
                       fontSize: 40,
@@ -67,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               const SizedBox(height: 1),
               Text(
-                "O CINEMA QUE VOCÊ AMA",
+                'O CINEMA QUE VOCÊ AMA',
                 textAlign: TextAlign.center,
                 style: AppFonts.dmMono(
                   color: AppColors.nougat,

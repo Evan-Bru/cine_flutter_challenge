@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cine_flutter_app/colors/app_colors.dart';
-import 'package:cine_flutter_app/fonts/app_fonts.dart';
+import '../core/colors/app_colors.dart';
+import '../core/fonts/app_fonts.dart';
+import '../routes/app_routes.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,8 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool hidePassword = true;
 
   // IMAGEM VINDO DA API
-  String bgimg =
-      'https://images.adsttc.com/media/images/58d5/3a58/e58e/ce48/a700/003f/newsletter/002.jpg?1490369108';
+  String bgimg = 'https://images.adsttc.com/media/images/58d5/3a58/e58e/ce48/a700/003f/newsletter/002.jpg?1490369108';
 
   @override
   void dispose() {
@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(image: NetworkImage(bgimg), fit: BoxFit.cover),
         ),
@@ -37,12 +37,12 @@ class _LoginScreenState extends State<LoginScreen> {
         child: SafeArea(
           bottom: false,
           child: Padding(
-            padding: .only(top: 71),
+            padding: const .only(top: 82),
             child: Column(
               children: [
                 // TOPO
                 SizedBox(
-                  height: MediaQuery.sizeOf(context).height * .28,
+                  height: MediaQuery.sizeOf(context).height * .25,
                   child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Cine",
+                              'Cine',
                               style: AppFonts.fraunces(
                                 color: AppColors.ired,
                                 fontSize: 40,
@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             const SizedBox(width: 3),
 
                             Text(
-                              "Stream",
+                              'Stream',
                               style: AppFonts.fraunces(
                                 color: AppColors.nougat,
                                 fontSize: 40,
@@ -80,6 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         const Text(
                           'O CINEMA QUE VOCÊ AMA',
+
                           style: TextStyle(
                             color: AppColors.nougat,
                             fontSize: 11,
@@ -106,12 +107,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
 
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
 
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: const Text(
+                        const Padding(
+                          padding: EdgeInsets.only(top: 10),
+                          child: Text(
                             'EMAIL',
                             style: TextStyle(
                               color: AppColors.nougat,
@@ -168,9 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                             suffixIcon: IconButton(
                               icon: Icon(
-                                hidePassword
-                                    ? Icons.visibility_outlined
-                                    : Icons.visibility_off_outlined,
+                                hidePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
 
                                 color: AppColors.nougat,
                                 size: 17,
@@ -213,11 +212,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(height: 28),
 
                         SizedBox(
-                          width: double.infinity,
                           height: 52,
 
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushReplacementNamed(context, AppRoutes.home);
+                            },
 
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.ired2,
@@ -240,32 +240,35 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         const SizedBox(height: 22),
 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 50),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
-                          children: [
-                            const Text(
-                              'Não possui conta?',
-
-                              style: TextStyle(
-                                color: AppColors.nougat,
-                                fontSize: 12,
-                              ),
-                            ),
-
-                            TextButton(
-                              onPressed: () {},
-
-                              child: const Text(
-                                'Cadastre-se',
+                            children: [
+                              const Text(
+                                'Não possui conta?',
 
                                 style: TextStyle(
-                                  color: AppColors.ired2,
+                                  color: AppColors.nougat,
                                   fontSize: 12,
                                 ),
                               ),
-                            ),
-                          ],
+
+                              TextButton(
+                                onPressed: () {},
+
+                                child: const Text(
+                                  'Cadastre-se',
+
+                                  style: TextStyle(
+                                    color: AppColors.ired2,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
 
                         const Spacer(),
