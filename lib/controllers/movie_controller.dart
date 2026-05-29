@@ -15,6 +15,13 @@ class MovieController {
   final ValueNotifier<bool> isLoading = ValueNotifier(false);
   final ValueNotifier<String?> errorMessage = ValueNotifier(null);
 
+  void dispose() {
+    movies.dispose();
+    selectedMovie.dispose();
+    isLoading.dispose();
+    errorMessage.dispose();
+  }
+
   String get apiKey => dotenv.env['TMDB_API_KEY'] ?? '';
 
   Future<void> getPopularMovies() async {

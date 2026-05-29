@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import '../core/colors/app_colors.dart';
 import '../core/fonts/app_fonts.dart';
-import 'login_screen.dart';
-
+import '../routes/app_routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -21,11 +20,9 @@ class _SplashScreenState extends State<SplashScreen> {
         return;
       }
 
-      Navigator.pushReplacement(
+      Navigator.pushReplacementNamed(
         context,
-        MaterialPageRoute(
-          builder: (context) => const LoginScreen(),
-      ),
+        AppRoutes.login,
       );
     });
   }
@@ -33,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.ired,
+      backgroundColor: AppColors.intenseRed,
       body: Center(
         child: SizedBox(
           width: 214,
