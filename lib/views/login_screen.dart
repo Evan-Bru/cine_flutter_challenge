@@ -4,7 +4,8 @@ import '../controllers/movie_controller.dart';
 import '../core/colors/app_colors.dart';
 import '../core/fonts/app_fonts.dart';
 import '../routes/app_routes.dart';
-import '../widgets/cine_stream_logo.dart';
+import '../widgets/loading_screen.dart';
+import '../widgets/login/login_header.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -24,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String? backgroundImageUrl;
 
   static const String fallbackImageUrl =
-      'https://images.adsttc.com/media/images/58d5/3a58/e58e/ce48/a700/003f/newsletter/002.jpg?1490369108';
+      'https://cdn.atarde.com.br/img/Artigo-Destaque/1380000/1200x720/rede-de-cinema-lanca-promocao-que-sorteia-ingresso0138475200202604022121-ScaleDownProportional.webp?fallback=https%3A%2F%2Fcdn.atarde.com.br%2Fimg%2FArtigo-Destaque%2F1380000%2Frede-de-cinema-lanca-promocao-que-sorteia-ingresso0138475200202604022121.jpg%3Fxid%3D7035109%26resize%3D1000%252C500%26t%3D1780252685&xid=7035109';
 
   @override
   void initState() {
@@ -72,21 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     if (isPreparingLogin) {
-      return const Scaffold(
-        backgroundColor: AppColors.darkBlue,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: .center,
-            children: [
-              CineStreamLogo(),
-              SizedBox(height: 24),
-              CircularProgressIndicator(
-                color: AppColors.intenseRed,
-              ),
-            ],
-          ),
-        ),
-      );
+      return const LoadingScreen();
     }
 
     final imageUrl = backgroundImageUrl ?? fallbackImageUrl;
@@ -102,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           Positioned(
             top: 78,
-            child: _buildHeaderTitles(),
+            child: LoginHeader(context: context),
           ),
           Positioned(
             bottom: 0,
@@ -119,29 +106,6 @@ class _LoginScreenState extends State<LoginScreen> {
       fit: BoxFit.cover,
       height: MediaQuery.sizeOf(context).height * 0.5,
       width: MediaQuery.sizeOf(context).width,
-    );
-  }
-
-  Widget _buildHeaderTitles() {
-    return SizedBox(
-      height: MediaQuery.sizeOf(context).height * 0.25,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const CineStreamLogo(),
-            const SizedBox(height: 1),
-            Text(
-              'O CINEMA QUE VOCÊ AMA',
-              style: AppFonts.dmMono(
-                color: AppColors.nougat,
-                fontSize: 11,
-                letterSpacing: 2.75,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 

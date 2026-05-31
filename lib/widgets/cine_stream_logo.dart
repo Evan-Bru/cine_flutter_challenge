@@ -4,7 +4,12 @@ import '../core/colors/app_colors.dart';
 import '../core/fonts/app_fonts.dart';
 
 class CineStreamLogo extends StatelessWidget {
-  const CineStreamLogo({super.key});
+  final double fontSize;
+
+  const CineStreamLogo({
+    super.key,
+    this.fontSize = 40,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +20,7 @@ class CineStreamLogo extends StatelessWidget {
           'Cine',
           style: AppFonts.fraunces(
             color: AppColors.intenseRed,
-            fontSize: 40,
+            fontSize: fontSize,
             fontStyle: FontStyle.italic,
             fontWeight: FontWeight.w300,
           ),
@@ -25,7 +30,7 @@ class CineStreamLogo extends StatelessWidget {
           'Stream',
           style: AppFonts.fraunces(
             color: AppColors.nougat,
-            fontSize: 40,
+            fontSize: fontSize,
             fontWeight: FontWeight.w500,
             letterSpacing: -0.9,
             height: 0.9,

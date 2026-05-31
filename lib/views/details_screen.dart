@@ -4,6 +4,11 @@ import '../controllers/movie_controller.dart';
 import '../core/colors/app_colors.dart';
 import '../core/fonts/app_fonts.dart';
 import '../models/movie_model.dart';
+import '../widgets/cine_stream_logo.dart';
+import '../widgets/details/details_backdrop_image.dart';
+import '../widgets/details/details_header.dart';
+import '../widgets/details/info_section.dart';
+import '../widgets/details/movie_info_row.dart';
 
 class DetailsScreen extends StatefulWidget {
   const DetailsScreen({super.key});
@@ -45,10 +50,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
           valueListenable: controller.isLoading,
           builder: (context, isLoading, child) {
             if (isLoading) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.intenseRed,
-                ),
+              return const Column(
+                mainAxisAlignment: .center,
+                children: [
+                  CineStreamLogo(),
+                  SizedBox(height: 24),
+                  CircularProgressIndicator(
+                    color: AppColors.intenseRed,
+                  ),
+                ],
               );
             }
 
@@ -93,11 +103,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       children: [
                         const SizedBox(height: 18),
 
-                        _Header(),
+                        const DetailsHeader(),
 
                         const SizedBox(height: 18),
 
-                        _BackdropImage(movie: movie),
+                        DetailsBackdropImage(movie: movie),
 
                         const SizedBox(height: 18),
 
@@ -114,7 +124,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
                         const SizedBox(height: 10),
 
-                        _MovieInfoRow(movie: movie),
+                        MovieInfoRow(movie: movie),
 
                         const SizedBox(height: 26),
 
@@ -180,7 +190,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
                         const SizedBox(height: 28),
 
-                        _InfoSection(
+                        InfoSection(
                           title: 'Produtoras:',
                           value: movie.productionCompanies.isNotEmpty
                               ? movie.productionCompanies.join(', ')
@@ -193,14 +203,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(
-                              child: _InfoSection(
+                              child: InfoSection(
                                 title: 'Orçamento:',
                                 value: _formatMoney(movie.budget),
                               ),
                             ),
                             const SizedBox(width: 24),
                             Expanded(
-                              child: _InfoSection(
+                              child: InfoSection(
                                 title: 'Bilheteria:',
                                 value: _formatMoney(movie.revenue),
                               ),
@@ -210,14 +220,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
                         const SizedBox(height: 24),
 
-                        _InfoSection(
+                        InfoSection(
                           title: 'Idiomas:',
                           value: movie.spokenLanguages.isNotEmpty ? movie.spokenLanguages.join(', ') : 'Não informado',
                         ),
 
                         const SizedBox(height: 24),
 
-                        _InfoSection(
+                        InfoSection(
                           title: 'Gêneros:',
                           value: movie.genres.isNotEmpty ? movie.genres.join(', ') : 'Não informado',
                         ),
@@ -235,14 +245,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
     );
   }
 
-  static String _getReleaseYear(String releaseDate) {
-    if (releaseDate.length >= 4) {
-      return releaseDate.substring(0, 4);
-    }
-
-    return 'Ano não informado';
-  }
-
   static String _formatMoney(int value) {
     if (value <= 0) {
       return 'Não informado';
@@ -251,174 +253,5 @@ class _DetailsScreenState extends State<DetailsScreen> {
     final millions = value / 1000000;
 
     return 'US\$ ${millions.toStringAsFixed(0)} milhões';
-  }
-}
-
-class _Header extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: 'Cine',
-                style: AppFonts.fraunces(
-                  color: AppColors.intenseRed,
-                  fontSize: 18,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-              TextSpan(
-                text: 'Stream',
-                style: AppFonts.fraunces(
-                  color: AppColors.nougat,
-                  fontSize: 18,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-        ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.search,
-            color: AppColors.mediumGray,
-            size: 20,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _BackdropImage extends StatelessWidget {
-  final MovieModel movie;
-
-  const _BackdropImage({
-    required this.movie,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(2),
-      child: Image.network(
-        movie.backdropUrl,
-        width: double.infinity,
-        height: 185,
-        fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) {
-          return Container(
-            width: double.infinity,
-            height: 185,
-            color: AppColors.transparentNougat08,
-            child: const Icon(
-              Icons.broken_image,
-              color: AppColors.mediumGray,
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class _MovieInfoRow extends StatelessWidget {
-  final MovieModel movie;
-
-  const _MovieInfoRow({
-    required this.movie,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final year = _DetailsScreenState._getReleaseYear(movie.releaseDate);
-
-    return Row(
-      children: [
-        const Icon(
-          Icons.star,
-          color: AppColors.transparentNougat60,
-          size: 14,
-        ),
-        const SizedBox(width: 4),
-        Text(
-          movie.voteAverage.toStringAsFixed(1),
-          style: AppFonts.roboto(
-            color: AppColors.transparentNougat60,
-            fontSize: 12,
-          ),
-        ),
-        const SizedBox(width: 12),
-        Text(
-          year,
-          style: AppFonts.roboto(
-            color: AppColors.transparentNougat60,
-            fontSize: 12,
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(
-            movie.genres.isNotEmpty ? movie.genres.join(', ') : 'Gênero não informado',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppFonts.roboto(
-              color: AppColors.transparentNougat60,
-              fontSize: 12,
-            ),
-          ),
-        ),
-        const SizedBox(width: 12),
-        Text(
-          movie.runtime > 0 ? '${movie.runtime}m' : '--',
-          style: AppFonts.roboto(
-            color: AppColors.transparentNougat60,
-            fontSize: 12,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _InfoSection extends StatelessWidget {
-  final String title;
-  final String value;
-
-  const _InfoSection({
-    required this.title,
-    required this.value,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: AppFonts.roboto(
-            color: AppColors.nougat,
-            fontSize: 13,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          value,
-          style: AppFonts.roboto(
-            color: AppColors.transparentNougat60,
-            fontSize: 13,
-            height: 1.4,
-          ),
-        ),
-      ],
-    );
   }
 }
