@@ -9,11 +9,9 @@ class AppColors {
 
   static const Color lightRed = Color.fromARGB(255, 255, 82, 82);
 
-  static const Color darkBlue = Color.fromARGB(255, 28, 29, 34);
+  static const Color darkBlue = Color.fromARGB(255, 28, 29, 33);
 
   static const Color softDarkBlue = Color.fromARGB(255, 36, 36, 40);
-
-  static const Color sdblack = Color.fromARGB(255, 28, 29, 33);
 
   static const Color mediumGray = Color.fromARGB(128, 110, 104, 120);
 

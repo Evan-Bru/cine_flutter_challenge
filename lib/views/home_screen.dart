@@ -5,6 +5,7 @@ import '../core/colors/app_colors.dart';
 import '../core/fonts/app_fonts.dart';
 import '../models/movie_model.dart';
 import '../routes/app_routes.dart';
+import '../widgets/cine_stream_logo.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,209 +33,223 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.darkBlue,
-      body: SafeArea(
-        child: ValueListenableBuilder<bool>(
-          valueListenable: controller.isLoading,
-          builder: (context, isLoading, child) {
-            if (isLoading) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.intenseRed,
-                ),
-              );
-            }
-
-            final error = controller.errorMessage.value;
-
-            if (error != null) {
-              return Center(
-                child: Padding(
-                  padding: const .all(24),
-                  child: Text(
-                    error,
-                    textAlign: TextAlign.center,
-                    style: AppFonts.roboto(
-                      color: AppColors.nougat,
-                      fontSize: 16,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        setState(() {
+          isSearchOpen = false;
+        });
+      },
+      behavior: HitTestBehavior.translucent,
+      child: Scaffold(
+        backgroundColor: AppColors.darkBlue,
+        body: SafeArea(
+          child: ValueListenableBuilder<bool>(
+            valueListenable: controller.isLoading,
+            builder: (context, isLoading, child) {
+              if (isLoading) {
+                return const Column(
+                  mainAxisAlignment: .center,
+                  children: [
+                    CineStreamLogo(),
+                    SizedBox(height: 24),
+                    CircularProgressIndicator(
+                      color: AppColors.intenseRed,
                     ),
-                  ),
-                ),
-              );
-            }
+                  ],
+                );
+              }
 
-            return ValueListenableBuilder<List<MovieModel>>(
-              valueListenable: controller.movies,
-              builder: (context, movies, child) {
-                if (movies.isEmpty) {
-                  return Center(
+              final error = controller.errorMessage.value;
+
+              if (error != null) {
+                return Center(
+                  child: Padding(
+                    padding: const .all(24),
                     child: Text(
-                      'Nenhum filme encontrado.',
+                      error,
+                      textAlign: TextAlign.center,
                       style: AppFonts.roboto(
                         color: AppColors.nougat,
                         fontSize: 16,
                       ),
                     ),
-                  );
-                }
-
-                final MovieModel featuredMovie = movies.first;
-
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding: const .symmetric(horizontal: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 12),
-                        Row(
-                          children: [
-                            RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'Cine',
-                                    style: AppFonts.fraunces(
-                                      color: AppColors.accentRed,
-                                      fontSize: 24,
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                  ),
-                                  const WidgetSpan(
-                                    child: SizedBox(width: 2),
-                                  ),
-                                  TextSpan(
-                                    text: 'Stream',
-                                    style: AppFonts.fraunces(
-                                      color: AppColors.nougat,
-                                      fontSize: 24,
-                                      letterSpacing: -0.9,
-                                      height: 0.9,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-
-                            const SizedBox(width: 16),
-
-                            Expanded(
-                              child: isSearchOpen
-                                  ? Container(
-                                      height: 36,
-                                      padding: const .symmetric(horizontal: 12),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.softDarkBlue,
-                                        borderRadius: BorderRadius.circular(18),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          const Icon(
-                                            Icons.search,
-                                            color: AppColors.mediumGray,
-                                            size: 16,
-                                          ),
-                                          const SizedBox(width: 8),
-                                          Expanded(
-                                            child: TextField(
-                                              style: AppFonts.roboto(
-                                                color: AppColors.nougat,
-
-                                                fontSize: 12,
-                                              ),
-                                              decoration: InputDecoration(
-                                                hintText: 'Pesquisar filme',
-                                                hintStyle: AppFonts.roboto(
-                                                  color: AppColors.transparentNougat60,
-                                                  fontSize: 12,
-                                                ),
-                                                border: InputBorder.none,
-                                                isDense: true,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  : Align(
-                                      alignment: Alignment.centerRight,
-                                      child: IconButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            isSearchOpen = true;
-                                          });
-                                        },
-                                        icon: const Icon(
-                                          Icons.search,
-                                          color: AppColors.mediumGray,
-                                          size: 20,
-                                        ),
-                                      ),
-                                    ),
-                            ),
-                          ],
-                        ),
-
-                        const SizedBox(height: 18),
-
-                        _FeaturedMovieCard(movie: featuredMovie),
-
-                        const SizedBox(height: 24),
-
-                        Text(
-                          'Populares no momento',
-                          style: AppFonts.roboto(
-                            color: AppColors.isabelline,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-
-                        const SizedBox(height: 12),
-
-                        _MoviePosterList(movies: movies),
-
-                        const SizedBox(height: 24),
-
-                        Text(
-                          'Assistir depois',
-                          style: AppFonts.roboto(
-                            color: AppColors.isabelline,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-
-                        const SizedBox(height: 12),
-
-                        _MoviePosterList(movies: movies),
-
-                        const SizedBox(height: 24),
-
-                        Text(
-                          'Bem avaliados',
-                          style: AppFonts.roboto(
-                            color: AppColors.isabelline,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-
-                        const SizedBox(height: 12),
-
-                        _MoviePosterList(movies: movies),
-
-                        const SizedBox(height: 24),
-                      ],
-                    ),
                   ),
                 );
-              },
-            );
-          },
+              }
+
+              return ValueListenableBuilder<List<MovieModel>>(
+                valueListenable: controller.movies,
+                builder: (context, movies, child) {
+                  if (movies.isEmpty) {
+                    return Center(
+                      child: Text(
+                        'Nenhum filme encontrado.',
+                        style: AppFonts.roboto(
+                          color: AppColors.nougat,
+                          fontSize: 16,
+                        ),
+                      ),
+                    );
+                  }
+
+                  final MovieModel featuredMovie = movies.first;
+
+                  return SingleChildScrollView(
+                    child: Padding(
+                      padding: const .symmetric(horizontal: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 12),
+                          Row(
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: 'Cine',
+                                      style: AppFonts.fraunces(
+                                        color: AppColors.accentRed,
+                                        fontSize: 24,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    ),
+                                    const WidgetSpan(
+                                      child: SizedBox(width: 2),
+                                    ),
+                                    TextSpan(
+                                      text: 'Stream',
+                                      style: AppFonts.fraunces(
+                                        color: AppColors.nougat,
+                                        fontSize: 24,
+                                        letterSpacing: -0.9,
+                                        height: 0.9,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              const SizedBox(width: 16),
+
+                              Expanded(
+                                child: isSearchOpen
+                                    ? Container(
+                                        height: 36,
+                                        padding: const .symmetric(horizontal: 12),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.softDarkBlue,
+                                          borderRadius: BorderRadius.circular(18),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.search,
+                                              color: AppColors.mediumGray,
+                                              size: 16,
+                                            ),
+                                            const SizedBox(width: 8),
+                                            Expanded(
+                                              child: TextField(
+                                                style: AppFonts.roboto(
+                                                  color: AppColors.nougat,
+
+                                                  fontSize: 12,
+                                                ),
+                                                decoration: InputDecoration(
+                                                  hintText: 'Pesquisar filme',
+                                                  hintStyle: AppFonts.roboto(
+                                                    color: AppColors.transparentNougat60,
+                                                    fontSize: 12,
+                                                  ),
+                                                  border: InputBorder.none,
+                                                  isDense: true,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : Align(
+                                        alignment: Alignment.centerRight,
+                                        child: IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              isSearchOpen = true;
+                                            });
+                                          },
+                                          icon: const Icon(
+                                            Icons.search,
+                                            color: AppColors.mediumGray,
+                                            size: 20,
+                                          ),
+                                        ),
+                                      ),
+                              ),
+                            ],
+                          ),
+
+                          const SizedBox(height: 18),
+
+                          _FeaturedMovieCard(movie: featuredMovie),
+
+                          const SizedBox(height: 24),
+
+                          Text(
+                            'Populares no momento',
+                            style: AppFonts.roboto(
+                              color: AppColors.isabelline,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+
+                          const SizedBox(height: 12),
+
+                          _MoviePosterList(movies: movies),
+
+                          const SizedBox(height: 24),
+
+                          Text(
+                            'Assistir depois',
+                            style: AppFonts.roboto(
+                              color: AppColors.isabelline,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+
+                          const SizedBox(height: 12),
+
+                          _MoviePosterList(movies: movies),
+
+                          const SizedBox(height: 24),
+
+                          Text(
+                            'Bem avaliados',
+                            style: AppFonts.roboto(
+                              color: AppColors.isabelline,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+
+                          const SizedBox(height: 12),
+
+                          _MoviePosterList(movies: movies),
+
+                          const SizedBox(height: 24),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );
@@ -268,9 +283,9 @@ class _FeaturedMovieCard extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Colors.black.withValues(alpha: 0.05),
-              Colors.black.withValues(alpha: 0.35),
-              Colors.black.withValues(alpha: 0.85),
+              Colors.transparent.withValues(alpha: 0.05),
+              AppColors.darkBlue.withValues(alpha: 0.35),
+              AppColors.darkBlue.withValues(alpha: 1),
             ],
           ),
         ),
