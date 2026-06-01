@@ -16,12 +16,12 @@ class DetailsBackdropImage extends StatelessWidget {
     return Image.network(
       movie.backdropUrl,
       width: double.infinity,
-      height: 185,
-      fit: BoxFit.cover,
+      height: 245,
+      fit: BoxFit.fill,
       errorBuilder: (context, error, stackTrace) {
         return Container(
           width: double.infinity,
-          height: 185,
+          height: 250,
           color: AppColors.transparentNougat08,
           child: const Icon(
             Icons.broken_image,

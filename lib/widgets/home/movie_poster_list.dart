@@ -15,7 +15,7 @@ class MoviePosterList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 155,
+      height: 203,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: movies.length,
@@ -35,22 +35,45 @@ class MoviePosterList extends StatelessWidget {
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16),
-              child: Image.network(
-                movie.posterUrl,
-                width: 100,
-                height: 155,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    width: 100,
-                    height: 155,
-                    color: AppColors.transparentNougat08,
-                    child: const Icon(
-                      Icons.broken_image,
-                      color: AppColors.mediumGray,
+              child: SizedBox(
+                width: 136,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Image.network(
+                      movie.posterUrl,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const ColoredBox(
+                          color: AppColors.transparentNougat08,
+                          child: Icon(
+                            Icons.broken_image,
+                            color: AppColors.mediumGray,
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
+
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            Colors.black.withValues(alpha: 0.1),
+                            Colors.black.withValues(alpha: 0.4),
+                          ],
+                          stops: const [
+                            0.0,
+                            0.5,
+                            1.0,
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );

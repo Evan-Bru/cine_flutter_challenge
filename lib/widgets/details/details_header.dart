@@ -19,7 +19,7 @@ class DetailsHeader extends StatelessWidget {
           icon: const Icon(
             Icons.search,
             color: AppColors.mediumGray,
-            size: 16,
+            size: 20,
           ),
         ),
       ],

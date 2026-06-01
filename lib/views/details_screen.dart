@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../controllers/movie_controller.dart';
 import '../core/colors/app_colors.dart';
 import '../core/fonts/app_fonts.dart';
+import '../core/gradients/app_gradients.dart';
 import '../models/movie_model.dart';
 import '../widgets/cine_stream_logo.dart';
 import '../widgets/details/details_backdrop_image.dart';
@@ -94,147 +95,166 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     ),
                   );
                 }
-
                 return SingleChildScrollView(
-                  child: Padding(
-                    padding: const .symmetric(horizontal: 24),
-                    child: Column(
-                      crossAxisAlignment: .start,
-                      children: [
-                        const SizedBox(height: 18),
-
-                        const DetailsHeader(),
-
-                        const SizedBox(height: 18),
-
-                        DetailsBackdropImage(movie: movie),
-
-                        const SizedBox(height: 18),
-
-                        Text(
-                          movie.title,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppFonts.fraunces(
-                            color: AppColors.nougat,
-                            fontSize: 22,
-                            fontWeight: .w700,
-                          ),
-                        ),
-
-                        const SizedBox(height: 10),
-
-                        MovieInfoRow(movie: movie),
-
-                        const SizedBox(height: 26),
-
-                        Row(
+                  child: Column(
+                    crossAxisAlignment: .start,
+                    children: [
+                      const Padding(
+                        padding: .symmetric(horizontal: 24),
+                        child: Column(
                           children: [
-                            Expanded(
-                              child: ElevatedButton.icon(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.play_arrow,
-                                  size: 18,
-                                ),
-                                label: Text(
-                                  'Assistir Agora',
-                                  style: AppFonts.roboto(
-                                    color: AppColors.nougat,
-                                    fontWeight: .w500,
-                                  ),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.intenseRed,
-                                  foregroundColor: AppColors.nougat,
-                                  padding: const .symmetric(
-                                    vertical: 16,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
+                            SizedBox(height: 10),
+                            DetailsHeader(),
+                            SizedBox(height: 12),
+                          ],
+                        ),
+                      ),
+                      Stack(
+                        children: [
+                          DetailsBackdropImage(movie: movie),
+                          Positioned.fill(
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                gradient: AppGradients.detailsImageOverlay,
                               ),
                             ),
-
-                            const SizedBox(width: 16),
-
-                            Container(
-                              height: 52,
-                              width: 52,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: AppColors.transparentNougat08,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: const Icon(
-                                Icons.bookmark_border,
+                          ),
+                          Positioned(
+                            left: 25,
+                            right: 38,
+                            bottom: 0,
+                            child: Text(
+                              movie.title,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppFonts.fraunces(
                                 color: AppColors.nougat,
-                                size: 18,
+                                fontSize: 24,
+                                fontWeight: .w600,
                               ),
                             ),
-                          ],
-                        ),
-
-                        const SizedBox(height: 24),
-
-                        Text(
-                          movie.overview.isNotEmpty ? movie.overview : 'Sinopse não disponível.',
-                          style: AppFonts.roboto(
-                            color: AppColors.nougat,
-                            fontSize: 14,
-                            height: 1.45,
                           ),
-                        ),
+                        ],
+                      ),
 
-                        const SizedBox(height: 28),
-
-                        InfoSection(
-                          title: 'Produtoras:',
-                          value: movie.productionCompanies.isNotEmpty
-                              ? movie.productionCompanies.join(', ')
-                              : 'Não informado',
-                        ),
-
-                        const SizedBox(height: 24),
-
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      Padding(
+                        padding: const .fromLTRB(25, 1, 40, 4),
+                        child: Column(
+                          crossAxisAlignment: .start,
                           children: [
-                            Expanded(
-                              child: InfoSection(
-                                title: 'Orçamento:',
-                                value: _formatMoney(movie.budget),
+                            const SizedBox(height: 10),
+
+                            MovieInfoRow(movie: movie),
+
+                            const SizedBox(height: 26),
+
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: ElevatedButton.icon(
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      Icons.play_arrow,
+                                      size: 24,
+                                    ),
+                                    label: Text(
+                                      'Assistir Agora',
+                                      style: AppFonts.roboto(
+                                        color: AppColors.nougat,
+                                        fontWeight: .w500,
+                                      ),
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.intenseRed,
+                                      foregroundColor: AppColors.nougat,
+                                      padding: const .fromLTRB(9, 16, 9, 16),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: .circular(16),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 30),
+                                Container(
+                                  height: 57,
+                                  width: 57,
+                                  decoration: BoxDecoration(
+                                    border: .all(
+                                      color: AppColors.transparentNougat08,
+                                    ),
+                                    borderRadius: .circular(16),
+                                  ),
+                                  child: const Icon(
+                                    Icons.bookmark_border,
+                                    color: AppColors.nougat,
+                                    size: 20,
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            const SizedBox(height: 24),
+
+                            Text(
+                              movie.overview.isNotEmpty ? movie.overview : 'Sinopse não disponível.',
+                              style: AppFonts.roboto(
+                                color: AppColors.nougat,
+                                fontSize: 14,
+                                height: 1.45,
                               ),
                             ),
-                            const SizedBox(width: 24),
-                            Expanded(
-                              child: InfoSection(
-                                title: 'Bilheteria:',
-                                value: _formatMoney(movie.revenue),
-                              ),
+
+                            const SizedBox(height: 28),
+
+                            InfoSection(
+                              title: 'Produtoras:',
+                              value: movie.productionCompanies.isNotEmpty
+                                  ? movie.productionCompanies.join(', ')
+                                  : 'Não informado',
                             ),
+
+                            const SizedBox(height: 24),
+
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: InfoSection(
+                                    title: 'Orçamento:',
+                                    value: _formatMoney(movie.budget),
+                                  ),
+                                ),
+                                const SizedBox(width: 24),
+                                Expanded(
+                                  child: InfoSection(
+                                    title: 'Bilheteria:',
+                                    value: _formatMoney(movie.revenue),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            const SizedBox(height: 24),
+
+                            InfoSection(
+                              title: 'Idiomas:',
+                              value: movie.spokenLanguages.isNotEmpty
+                                  ? movie.spokenLanguages.join(', ')
+                                  : 'Não informado',
+                            ),
+
+                            const SizedBox(height: 24),
+
+                            InfoSection(
+                              title: 'Gêneros:',
+                              value: movie.genres.isNotEmpty ? movie.genres.join(', ') : 'Não informado',
+                            ),
+
+                            const SizedBox(height: 32),
                           ],
                         ),
-
-                        const SizedBox(height: 24),
-
-                        InfoSection(
-                          title: 'Idiomas:',
-                          value: movie.spokenLanguages.isNotEmpty ? movie.spokenLanguages.join(', ') : 'Não informado',
-                        ),
-
-                        const SizedBox(height: 24),
-
-                        InfoSection(
-                          title: 'Gêneros:',
-                          value: movie.genres.isNotEmpty ? movie.genres.join(', ') : 'Não informado',
-                        ),
-
-                        const SizedBox(height: 32),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 );
               },

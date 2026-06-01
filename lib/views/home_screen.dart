@@ -61,9 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 );
               }
-
               final error = controller.errorMessage.value;
-
               if (error != null) {
                 return Center(
                   child: Padding(
@@ -79,7 +77,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 );
               }
-
               return ValueListenableBuilder<List<MovieModel>>(
                 valueListenable: controller.movies,
                 builder: (context, movies, child) {
@@ -94,62 +91,75 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   }
-
                   final MovieModel featuredMovie = movies.first;
-
                   return SingleChildScrollView(
-                    child: Padding(
-                      padding: const .symmetric(horizontal: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 12),
-                          HomeAppBar(
-                            isSearchOpen: isSearchOpen,
-                            onOpenSearch: () {
-                              setState(() {
-                                isSearchOpen = true;
-                              });
-                            },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const .symmetric(horizontal: 16),
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 12),
+                              HomeAppBar(
+                                isSearchOpen: isSearchOpen,
+                                onOpenSearch: () {
+                                  setState(() {
+                                    isSearchOpen = true;
+                                  });
+                                },
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 18),
-                          FeaturedMovieCard(movie: featuredMovie),
-                          const SizedBox(height: 24),
-                          Text(
-                            'Populares no momento',
-                            style: AppFonts.roboto(
-                              color: AppColors.isabelline,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
+                        ),
+
+                        const SizedBox(height: 12),
+
+                        FeaturedMovieCard(movie: featuredMovie),
+
+                        Padding(
+                          padding: const .symmetric(horizontal: 16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 42),
+                              Text(
+                                'Populares no momento',
+                                style: AppFonts.roboto(
+                                  color: AppColors.isabelline,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              MoviePosterList(movies: movies),
+                              const SizedBox(height: 24),
+                              Text(
+                                'Assistir depois',
+                                style: AppFonts.roboto(
+                                  color: AppColors.isabelline,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              MoviePosterList(movies: movies),
+                              const SizedBox(height: 24),
+                              Text(
+                                'Bem avaliados',
+                                style: AppFonts.roboto(
+                                  color: AppColors.isabelline,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              MoviePosterList(movies: movies),
+                              const SizedBox(height: 24),
+                            ],
                           ),
-                          const SizedBox(height: 12),
-                          MoviePosterList(movies: movies),
-                          const SizedBox(height: 24),
-                          Text(
-                            'Assistir depois',
-                            style: AppFonts.roboto(
-                              color: AppColors.isabelline,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          MoviePosterList(movies: movies),
-                          const SizedBox(height: 24),
-                          Text(
-                            'Bem avaliados',
-                            style: AppFonts.roboto(
-                              color: AppColors.isabelline,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          MoviePosterList(movies: movies),
-                          const SizedBox(height: 24),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   );
                 },

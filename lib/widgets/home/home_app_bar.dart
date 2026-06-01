@@ -21,14 +21,16 @@ class HomeAppBar extends StatelessWidget {
         const CineStreamLogo(
           fontSize: 24,
         ),
-        const SizedBox(width: 16),
+        const SizedBox(width: 87),
         Expanded(
           child: isSearchOpen
               ? Container(
                   height: 36,
                   padding: const .symmetric(horizontal: 12),
                   decoration: BoxDecoration(
-                    color: AppColors.softDarkBlue,
+                    border: .all(
+                      color: AppColors.transparentNougat08,
+                    ),
                     borderRadius: .circular(18),
                   ),
                   child: Row(
@@ -36,7 +38,7 @@ class HomeAppBar extends StatelessWidget {
                       const Icon(
                         Icons.search,
                         color: AppColors.mediumGray,
-                        size: 16,
+                        size: 20,
                       ),
                       const SizedBox(width: 8),
                       Expanded(
@@ -61,12 +63,15 @@ class HomeAppBar extends StatelessWidget {
                 )
               : Align(
                   alignment: .centerRight,
-                  child: IconButton(
-                    onPressed: onOpenSearch,
-                    icon: const Icon(
-                      Icons.search,
-                      color: AppColors.mediumGray,
-                      size: 20,
+                  child: SizedBox(
+                    height: 36,
+                    child: IconButton(
+                      onPressed: onOpenSearch,
+                      icon: const Icon(
+                        Icons.search,
+                        color: AppColors.mediumGray,
+                        size: 20,
+                      ),
                     ),
                   ),
                 ),

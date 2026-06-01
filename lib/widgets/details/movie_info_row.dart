@@ -33,7 +33,23 @@ class MovieInfoRow extends StatelessWidget {
         ),
         const SizedBox(width: 12),
         Text(
+          '|',
+          style: AppFonts.roboto(
+            color: AppColors.transparentNougat60,
+            fontSize: 12,
+          ),
+        ),
+        const SizedBox(width: 12),
+        Text(
           year,
+          style: AppFonts.roboto(
+            color: AppColors.transparentNougat60,
+            fontSize: 12,
+          ),
+        ),
+        const SizedBox(width: 12),
+        Text(
+          '|',
           style: AppFonts.roboto(
             color: AppColors.transparentNougat60,
             fontSize: 12,
@@ -53,7 +69,15 @@ class MovieInfoRow extends StatelessWidget {
         ),
         const SizedBox(width: 12),
         Text(
-          movie.runtime > 0 ? '${movie.runtime}m' : '--',
+          '|',
+          style: AppFonts.roboto(
+            color: AppColors.transparentNougat60,
+            fontSize: 12,
+          ),
+        ),
+        const SizedBox(width: 12),
+        Text(
+          movie.runtime > 0 ? '${movie.runtime ~/ 60}h ${movie.runtime % 60}m' : '--',
           style: AppFonts.roboto(
             color: AppColors.transparentNougat60,
             fontSize: 12,

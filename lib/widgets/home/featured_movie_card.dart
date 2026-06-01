@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/colors/app_colors.dart';
 import '../../core/fonts/app_fonts.dart';
+import '../../core/gradients/app_gradients.dart';
 import '../../models/movie_model.dart';
 import '../../routes/app_routes.dart';
 
@@ -17,32 +18,22 @@ class FeaturedMovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 210,
+      height: 308,
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
         image: DecorationImage(
           image: NetworkImage(movie.backdropUrl),
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
         ),
       ),
       child: Container(
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.transparent.withValues(alpha: 0.05),
-              AppColors.darkBlue.withValues(alpha: 0.35),
-              AppColors.darkBlue.withValues(alpha: 1),
-            ],
-          ),
+        padding: const .fromLTRB(25, 1, 40, 4),
+        decoration: const BoxDecoration(
+          gradient: AppGradients.featuredMovieOverlay,
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: .end,
+          crossAxisAlignment: .start,
           children: [
             Text(
               movie.title,
@@ -50,11 +41,11 @@ class FeaturedMovieCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppFonts.fraunces(
                 color: AppColors.nougat,
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
+                fontSize: 24,
+                fontWeight: .w600,
               ),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 8),
             Row(
               children: [
                 const Icon(
@@ -72,6 +63,14 @@ class FeaturedMovieCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Text(
+                  '|',
+                  style: AppFonts.roboto(
+                    color: AppColors.transparentNougat60,
+                    fontSize: 12,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Text(
                   _getReleaseYear(movie.releaseDate),
                   style: AppFonts.roboto(
                     color: AppColors.transparentNougat60,
@@ -80,7 +79,7 @@ class FeaturedMovieCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 25),
             Row(
               children: [
                 Expanded(
@@ -94,34 +93,34 @@ class FeaturedMovieCard extends StatelessWidget {
                     },
                     icon: const Icon(
                       Icons.play_arrow,
-                      size: 18,
+                      size: 24,
                     ),
                     label: Text(
                       'Assistir Agora',
                       style: AppFonts.roboto(
                         color: AppColors.nougat,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: .w500,
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.intenseRed,
                       foregroundColor: AppColors.nougat,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      padding: const .fromLTRB(9, 16, 9, 16),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: .circular(16),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 22),
                 Container(
-                  height: 44,
-                  width: 44,
+                  height: 57,
+                  width: 57,
                   decoration: BoxDecoration(
-                    border: Border.all(
+                    border: .all(
                       color: AppColors.transparentNougat08,
                     ),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: .circular(16),
                   ),
                   child: const Icon(
                     Icons.bookmark_border,
