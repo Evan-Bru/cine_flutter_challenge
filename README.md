@@ -1,6 +1,8 @@
 # CineStream - CineApp
 
-![Demonstração do CineStream](docs/preview/demo.gif)
+<p align="center">
+  <img src="docs/preview/demo.gif" width="350">
+</p>
 
 Aplicativo mobile desenvolvido em **Flutter** para listar filmes populares e exibir informações detalhadas consumidas da API do **The Movie Database (TMDB)**.
 
